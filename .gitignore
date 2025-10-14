@@ -1,0 +1,31 @@
+# Node modules
+node_modules/
+
+# Playwright test output
+test-results/
+playwright-report/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# CSV / Reports
+*.csv
+*.json
+
+# Coverage (if using nyc / istanbul)
+coverage/
