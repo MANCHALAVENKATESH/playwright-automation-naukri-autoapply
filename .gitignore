@@ -25,7 +25,7 @@ Thumbs.db
 
 # CSV / Reports
 *.csv
-*.json
+# *.json
 
 # Coverage (if using nyc / istanbul)
 coverage/

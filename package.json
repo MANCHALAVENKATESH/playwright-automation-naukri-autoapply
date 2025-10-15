@@ -1,0 +1,19 @@
+{
+  "name": "automation-naukri",
+  "version": "1.0.0",
+  "description": "Automation for Naukri profile and job application",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:report": "npx playwright show-report"
+  },
+  "keywords": ["playwright", "automation", "naukri", "csv"],
+  "author": "Your Name",
+  "license": "ISC",
+  "dependencies": {
+    "@playwright/test": "^1.56.0",
+    "csv-writer": "^1.6.0",
+    "dotenv": "^17.2.3",
+    "playwright": "^1.56.0"
+  }
+}
