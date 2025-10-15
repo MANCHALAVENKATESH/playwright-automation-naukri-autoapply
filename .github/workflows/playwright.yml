@@ -21,33 +21,29 @@ jobs:
         with:
           node-version: '20'
 
-      # 3️⃣ Install dependencies in subfolder
+      # 3️⃣ Install dependencies
       - name: Install dependencies
         run: npm ci
-        working-directory: automation
 
-      # 4️⃣ Install Playwright browsers in subfolder
+      # 4️⃣ Install Playwright browsers
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
-        working-directory: automation
 
-      # 5️⃣ Create .env file dynamically in subfolder
+      # 5️⃣ Create .env file dynamically
       - name: Create .env
         run: |
           echo "NAUKRI_EMAIL=${{ secrets.NAUKRI_EMAIL }}" >> .env
           echo "NAUKRI_PASSWORD=${{ secrets.NAUKRI_PASSWORD }}" >> .env
           echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
           echo "CV=${{ secrets.CV }}" >> .env
-        working-directory: automation
 
-      # 6️⃣ Run Playwright tests in subfolder
+      # 6️⃣ Run Playwright tests
       - name: Run Playwright tests
         run: npx playwright test tests/check.spec.js --headed=false
-        working-directory: automation
 
-      # 7️⃣ Upload CSV report from subfolder
+      # 7️⃣ Upload CSV report using v4
       - name: Upload job_report.csv
         uses: actions/upload-artifact@v4
         with:
           name: job_report
-          path: automation/job_report.csv
+          path: job_report.csv
