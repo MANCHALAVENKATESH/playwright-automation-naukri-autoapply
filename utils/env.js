@@ -5,6 +5,7 @@ dotenv.config();
 export const BASE_URL = process.env.BASE_URL;
 export const USERNAME = process.env.NAUKRI_EMAIL;
 export const PASSWORD = process.env.NAUKRI_PASSWORD;
+export const CV = process.env.CV;
 
 
 // Create the query param part (comma separated, URL encoded)

@@ -1,10 +1,32 @@
 import { test } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage.js';
-import { USERNAME, PASSWORD, JOB_FILTER, pagination } from '../utils/env.js';
+import { USERNAME, PASSWORD, JOB_FILTER, pagination, CV } from '../utils/env.js';
 import { ApplyJob } from '../pages/ApplyJobs.js';
 import { getText } from '../helpers/actions.js';
 import { saveCSVReport } from '../utils/reports.js';
 
+
+test('Update Profile', async ({ page, context }) => {
+    const loginPage = new LoginPage(page);
+  // Load cookies if available
+  await loginPage.loadCookies();
+
+  // Open Naukri
+  await loginPage.openNaukri();
+
+  // Login only if cookies are not valid
+  if (!page.url().includes('mnjuser')) {
+    await loginPage.login(USERNAME, PASSWORD);
+  } else {
+    console.log("✅ Login not required, cookies are valid");
+  }
+
+  await page.getByRole('img', { name: 'naukri user profile img' }).click();
+  await page.getByRole('link', { name: 'View & Update Profile' }).click();
+  await page.setInputFiles('input#attachCV', CV);
+  await page.locator('#lazyResumeHead').getByText('editOneTheme').click();
+  await page.getByRole('button', { name: 'Save' }).click();
+  })
 
 test('Login to Naukri and fetch all job links', async ({ page, context }) => {
   const loginPage = new LoginPage(page);
@@ -58,7 +80,7 @@ test('Login to Naukri and fetch all job links', async ({ page, context }) => {
 
   // 🟢 Loop through pagination
   let currentIndex = jobElements.length;
-  for (let pageNum = 2; pageNum < 2; pageNum++) {
+  for (let pageNum = 2; pageNum <=4; pageNum++) {
     const nextPageURL = pagination(pageNum);
     await page.goto(nextPageURL, { waitUntil: 'load' });
     await page.waitForSelector('//div[@class="srp-jobtuple-wrapper"]//h2/a', { timeout: 30000 });
@@ -83,3 +105,4 @@ test('Login to Naukri and fetch all job links', async ({ page, context }) => {
   console.log('🗺️ Job Map:', jobMap);
   await saveCSVReport()
 });
+
