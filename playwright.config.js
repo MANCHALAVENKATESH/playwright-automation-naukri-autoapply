@@ -12,7 +12,7 @@ export default defineConfig({
 
   // Browser configuration
   use: {
-    headless: false,                 // set true for CI
+    headless: true,                 // set true for CI
     browserName: 'chromium',         // chromium, firefox, or webkit
     viewport: { width: 1280, height: 720 },
     baseURL: process.env.BASE_URL,   // optional base URL from .env

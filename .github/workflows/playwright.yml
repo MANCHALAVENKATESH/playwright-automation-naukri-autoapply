@@ -39,7 +39,7 @@ jobs:
 
       # 6️⃣ Run Playwright tests
       - name: Run Playwright tests
-        run: npx playwright test tests/check.spec.js --headed=false
+        run: npx playwright test tests/check.spec.js
 
       # 7️⃣ Upload CSV report using v4
       - name: Upload job_report.csv
