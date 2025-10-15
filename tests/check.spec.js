@@ -1,7 +1,7 @@
 import { test } from '@playwright/test';
 
 
-test('test', async ({ page }) => {
+test('test', async ({ browser }) => {
     console.log("Success CI CD");
     
 })
