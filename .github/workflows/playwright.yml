@@ -41,9 +41,9 @@ jobs:
       - name: Run Playwright tests
         run: npx playwright test tests/check.spec.js
 
-      # 7️⃣ Upload CSV report
+      # 7️⃣ Upload CSV report using v4
       - name: Upload job_report.csv
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: job_report
           path: job_report.csv
