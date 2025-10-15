@@ -21,15 +21,24 @@ jobs:
         with:
           node-version: '20'
 
-      # 3️⃣ Install dependencies
+      # 3️⃣ Cache Node.js dependencies
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # 4️⃣ Install dependencies
       - name: Install dependencies
         run: npm ci
 
-      # 4️⃣ Install Playwright browsers
+      # 5️⃣ Install Playwright browsers
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      # 5️⃣ Create .env file dynamically
+      # 6️⃣ Create .env file dynamically
       - name: Create .env
         run: |
           echo "NAUKRI_EMAIL=${{ secrets.NAUKRI_EMAIL }}" >> .env
@@ -37,11 +46,11 @@ jobs:
           echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
           echo "CV=${{ secrets.CV }}" >> .env
 
-      # 6️⃣ Run Playwright tests
+      # 7️⃣ Run Playwright tests
       - name: Run Playwright tests
         run: npx playwright test tests/check.spec.js
 
-      # 7️⃣ Upload CSV report using v4
+      # 8️⃣ Upload CSV report using v4
       - name: Upload job_report.csv
         uses: actions/upload-artifact@v4
         with:
