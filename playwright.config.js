@@ -19,6 +19,7 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     trace: 'retain-on-failure',
+    slowMo: 50
   },
 
   // Parallel execution config
