@@ -48,10 +48,27 @@ jobs:
 
       # 7️⃣ Run Playwright tests
       - name: Run Playwright tests
-        run: npx playwright test
+        run: npx playwright test --reporter=line
 
-      # 8️⃣ Upload CSV report using v4
-      - name: Upload job_report.csv
+      # 8️⃣ Upload Playwright test results (screenshots, traces, etc.)
+      - name: Upload Playwright test results
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-test-results
+          path: test-results/
+
+      # 9️⃣ Upload Playwright HTML report
+      - name: Upload Playwright HTML report
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-html-report
+          path: playwright-report/
+
+      # 🔟 Upload CSV report
+      - name: Upload CSV Report
+        if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
           name: job_report

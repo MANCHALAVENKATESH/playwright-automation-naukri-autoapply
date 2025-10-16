@@ -80,7 +80,7 @@ test('Login to Naukri and fetch all job links', async ({ page, context }) => {
 
   // 🟢 Loop through pagination
   let currentIndex = jobElements.length;
-  for (let pageNum = 2; pageNum <=2; pageNum++) {
+  for (let pageNum = 2; pageNum <=3; pageNum++) {
     const nextPageURL = pagination(pageNum);
     await page.goto(nextPageURL, { waitUntil: 'load' });
     await page.waitForSelector('//div[@class="srp-jobtuple-wrapper"]//h2/a', { timeout: 30000 });
