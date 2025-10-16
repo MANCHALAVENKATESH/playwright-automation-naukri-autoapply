@@ -21,6 +21,10 @@ export class ApplyJob {
     const applyText = await getText(this.page,this.applyButtonText)
     if(applyText == "Apply"){
         await click(this.page,this.applyButtonText)
+        const isChipVisible = await this.page.locator("div.chipMsg").isVisible().catch(() =>false)
+        if(isChipVisible){
+          await logJobResult("FORM_NEED_TO_FILL",href)
+        }
         console.log("Applied Jobs ",href);
       await logJobResult('APPLIED_JOBS', href);
     }

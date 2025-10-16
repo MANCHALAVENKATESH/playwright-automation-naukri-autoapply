@@ -65,10 +65,8 @@ test('Login to Naukri and fetch all job links', async ({ page, context }) => {
   // 🟢 Get total job count from ApplyJob class
   const applyJob = new ApplyJob(page);
   const countJobs = await applyJob.getNumberOfJob();
-  const limit = Math.ceil(countJobs / 20);
 
   console.log(`🔢 Total jobs across pages: ${countJobs}`);
-  console.log(`📄 Total pages expected: ${limit}`);
     
   for (const [index, href] of jobMap.entries()) {
     console.log(`Job ${index} → ${href}`);
@@ -77,10 +75,12 @@ test('Login to Naukri and fetch all job links', async ({ page, context }) => {
   }
   jobMap.clear()
 
+  const pageNumLimit = Math.ceil(countJobs / 20);
+  console.log(`📄 Total pages expected: ${pageNumLimit}`);
 
   // 🟢 Loop through pagination
   let currentIndex = jobElements.length;
-  for (let pageNum = 2; pageNum <=4; pageNum++) {
+  for (let pageNum = 2; pageNum <=2; pageNum++) {
     const nextPageURL = pagination(pageNum);
     await page.goto(nextPageURL, { waitUntil: 'load' });
     await page.waitForSelector('//div[@class="srp-jobtuple-wrapper"]//h2/a', { timeout: 30000 });
