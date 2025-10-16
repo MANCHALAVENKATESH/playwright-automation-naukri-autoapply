@@ -48,7 +48,7 @@ jobs:
 
       # 7️⃣ Run Playwright tests
       - name: Run Playwright tests
-        run: npx playwright test tests/check.spec.js
+        run: npx playwright test tests/naukriLogin.spec.js
 
       # 8️⃣ Upload CSV report using v4
       - name: Upload job_report.csv
