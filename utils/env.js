@@ -2,7 +2,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-export const BASE_URL = process.env.BASE_URL;
+export const BASE_URL = "https://www.naukri.com"
 export const USERNAME = process.env.NAUKRI_EMAIL;
 export const PASSWORD = process.env.NAUKRI_PASSWORD;
 export const CV = process.env.CV;
