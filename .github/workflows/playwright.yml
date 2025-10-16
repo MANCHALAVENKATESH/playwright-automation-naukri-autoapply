@@ -6,12 +6,17 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout repo
+      # 1️⃣ Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -47,7 +52,7 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      # 7️⃣ Create .env file dynamically
+      # 7️⃣ Create .env dynamically
       - name: Create .env
         run: |
           echo "NAUKRI_EMAIL=${{ secrets.NAUKRI_EMAIL }}" >> .env
@@ -55,7 +60,7 @@ jobs:
           echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
           echo "CV=${{ secrets.CV }}" >> .env
 
-      # 8️⃣ Run Playwright tests
+      # 8️⃣ Run Playwright tests and generate HTML report
       - name: Run Playwright tests
         run: npx playwright test --reporter=html,line
 
@@ -67,7 +72,7 @@ jobs:
           name: playwright-test-results
           path: test-results/
 
-      # 🔟 Upload CSV report
+      # 🔟 Upload job_report.csv
       - name: Upload CSV Report
         if: success() || failure()
         uses: actions/upload-artifact@v4
@@ -75,24 +80,25 @@ jobs:
           name: job_report
           path: job_report.csv
 
-      # 1️⃣1️⃣ Upload HTML report for GitHub Pages deployment
+      # 1️⃣1️⃣ Prepare HTML report with run folder name
+      - name: Move report to run-numbered folder
+        if: success() || failure()
+        run: |
+          mkdir -p "report-history/${{ github.run_number }}"
+          cp -r playwright-report/* "report-history/${{ github.run_number }}/"
+
+      # 1️⃣2️⃣ Upload HTML report for GitHub Pages
       - name: Upload Playwright HTML report
         if: success() || failure()
         uses: actions/upload-pages-artifact@v3
         with:
-          path: playwright-report/
+          path: report-history/
 
-  # 1️⃣2️⃣ Deploy HTML report to GitHub Pages
+  # 1️⃣3️⃣ Deploy HTML report to GitHub Pages
   deploy:
     needs: test
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy Playwright HTML Report to GitHub Pages
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
