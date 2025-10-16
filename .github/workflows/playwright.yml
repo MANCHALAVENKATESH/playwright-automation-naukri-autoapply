@@ -21,8 +21,8 @@ jobs:
         with:
           node-version: '20'
 
-      # 3️⃣ Cache Node.js dependencies
-      - name: Cache Node.js modules
+      # 3️⃣ Cache Node.js modules
+      - name: Cache Node.js dependencies
         uses: actions/cache@v3
         with:
           path: node_modules
@@ -30,15 +30,24 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      # 4️⃣ Install dependencies
+      # 4️⃣ Install dependencies (only if cache miss or changed)
       - name: Install dependencies
         run: npm ci
 
-      # 5️⃣ Install Playwright browsers
+      # 5️⃣ Cache Playwright browsers
+      - name: Cache Playwright browsers
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      # 6️⃣ Install Playwright browsers (only if not cached)
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      # 6️⃣ Create .env file dynamically
+      # 7️⃣ Create .env file dynamically
       - name: Create .env
         run: |
           echo "NAUKRI_EMAIL=${{ secrets.NAUKRI_EMAIL }}" >> .env
@@ -46,11 +55,11 @@ jobs:
           echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
           echo "CV=${{ secrets.CV }}" >> .env
 
-      # 7️⃣ Run Playwright tests
+      # 8️⃣ Run Playwright tests
       - name: Run Playwright tests
         run: npx playwright test --reporter=line
 
-      # 8️⃣ Upload Playwright test results (screenshots, traces, etc.)
+      # 9️⃣ Upload Playwright test results (screenshots, traces, etc.)
       - name: Upload Playwright test results
         if: success() || failure()
         uses: actions/upload-artifact@v4
@@ -58,7 +67,7 @@ jobs:
           name: playwright-test-results
           path: test-results/
 
-      # 9️⃣ Upload Playwright HTML report
+      # 🔟 Upload Playwright HTML report
       - name: Upload Playwright HTML report
         if: success() || failure()
         uses: actions/upload-artifact@v4
@@ -66,7 +75,7 @@ jobs:
           name: playwright-html-report
           path: playwright-report/
 
-      # 🔟 Upload CSV report
+      # 1️⃣1️⃣ Upload CSV report
       - name: Upload CSV Report
         if: success() || failure()
         uses: actions/upload-artifact@v4
