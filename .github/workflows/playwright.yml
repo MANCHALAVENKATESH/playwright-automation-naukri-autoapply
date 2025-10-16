@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: '20'
 
-      # 3️⃣ Cache Node.js modules
+      # 3️⃣ Cache Node.js dependencies
       - name: Cache Node.js dependencies
         uses: actions/cache@v3
         with:
@@ -30,7 +30,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      # 4️⃣ Install dependencies (only if cache miss or changed)
+      # 4️⃣ Install dependencies
       - name: Install dependencies
         run: npm ci
 
@@ -43,7 +43,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-playwright-
 
-      # 6️⃣ Install Playwright browsers (only if not cached)
+      # 6️⃣ Install Playwright browsers
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
@@ -57,9 +57,9 @@ jobs:
 
       # 8️⃣ Run Playwright tests
       - name: Run Playwright tests
-        run: npx playwright test --reporter=line
+        run: npx playwright test --reporter=html,line
 
-      # 9️⃣ Upload Playwright test results (screenshots, traces, etc.)
+      # 9️⃣ Upload Playwright test results
       - name: Upload Playwright test results
         if: success() || failure()
         uses: actions/upload-artifact@v4
@@ -67,18 +67,32 @@ jobs:
           name: playwright-test-results
           path: test-results/
 
-      # 🔟 Upload Playwright HTML report
-      - name: Upload Playwright HTML report
-        if: success() || failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-html-report
-          path: playwright-report/
-
-      # 1️⃣1️⃣ Upload CSV report
+      # 🔟 Upload CSV report
       - name: Upload CSV Report
         if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
           name: job_report
           path: job_report.csv
+
+      # 1️⃣1️⃣ Upload HTML report for GitHub Pages deployment
+      - name: Upload Playwright HTML report
+        if: success() || failure()
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: playwright-report/
+
+  # 1️⃣2️⃣ Deploy HTML report to GitHub Pages
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy Playwright HTML Report to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
