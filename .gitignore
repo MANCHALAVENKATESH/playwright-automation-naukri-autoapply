@@ -24,7 +24,6 @@ Thumbs.db
 .vscode/
 
 # CSV / Reports
-*.csv
 # *.json
 
 # Coverage (if using nyc / istanbul)
