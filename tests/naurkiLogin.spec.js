@@ -2,11 +2,11 @@ import { test } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage.js';
 import { USERNAME, PASSWORD, JOB_FILTER, pagination, CV } from '../utils/env.js';
 import { ApplyJob } from '../pages/ApplyJobs.js';
-import { getText } from '../helpers/actions.js';
+import { getText, sleep } from '../helpers/actions.js';
 import { saveCSVReport } from '../utils/reports.js';
 
 
-test('Update Profile', async ({ page, context }) => {
+test('UpdateProfile', async ({ page, context }) => {
     const loginPage = new LoginPage(page);
   // Load cookies if available
   await loginPage.loadCookies();
@@ -28,7 +28,7 @@ test('Update Profile', async ({ page, context }) => {
   await page.getByRole('button', { name: 'Save' }).click();
   })
 
-test('Login to Naukri and fetch all job links', async ({ page, context }) => {
+test('ApplyJobs', async ({ page, context }) => {
   const loginPage = new LoginPage(page);
 
   // Load cookies if available
@@ -80,7 +80,7 @@ test('Login to Naukri and fetch all job links', async ({ page, context }) => {
 
   // 🟢 Loop through pagination
   let currentIndex = jobElements.length;
-  for (let pageNum = 2; pageNum <=3; pageNum++) {
+  for (let pageNum = 5; pageNum <=pageNumLimit; pageNum++) {
     const nextPageURL = pagination(pageNum);
     await page.goto(nextPageURL, { waitUntil: 'load' });
     await page.waitForSelector('//div[@class="srp-jobtuple-wrapper"]//h2/a', { timeout: 30000 });
@@ -95,7 +95,10 @@ test('Login to Naukri and fetch all job links', async ({ page, context }) => {
      // Process each job (async safe)
   for (const [index, href] of jobMap.entries()) {
     console.log(`Job ${index} → ${href}`);
+    sleep(5000)
     await page.goto(href, { waitUntil: 'load' });
+    sleep(5000)
+
     await applyJob.jobApplyButtonText(href);  // assuming this is async
   }
     jobMap.clear()

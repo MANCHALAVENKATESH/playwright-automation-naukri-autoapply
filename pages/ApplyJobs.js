@@ -7,7 +7,6 @@ export class ApplyJob {
   }
 
   NumberOfJobs = '//*[@id="jobs-list-header"]/div[1]/span';
-  applyButtonText = '(//*[@id="job_header"]/div[2]/div[2]/button)[2]'
   // Use single quotes outside or escape double quotes
 
   // Method to get number of jobs
@@ -17,28 +16,43 @@ export class ApplyJob {
     return lastNumber; // returns the text content of the element
   }
 
-  async jobApplyButtonText(href){
-    const applyText = await getText(this.page,this.applyButtonText)
-    if(applyText == "Apply"){
-        await click(this.page,this.applyButtonText)
-        const isChipVisible = await this.page.locator("div.chipMsg").isVisible().catch(() =>false)
-        if(isChipVisible){
-          await logJobResult("FORM_NEED_TO_FILL",href)
-        }
-        console.log("Applied Jobs ",href);
-      await logJobResult('APPLIED_JOBS', href);
-    }
-    else if (applyText.includes('Interested')) {
-      console.log('💼 Interested:', href);
-      await logJobResult('INTERESTED', href);
+async jobApplyButtonText(href) {
+  // Determine which button exists
+  let applyButtonXpath = '(//*[@id="job_header"]/div[2]/div[2]/button)[2]'; // default for Apply/Interested/Company Site
 
-    } else if (applyText.includes('Company Site')) {
-      console.log('🌐 Company Site:', href);
-      await logJobResult('COMPANY_SITE', href);
-    } else {
-      console.log('🔸 Other:', href);
-      await logJobResult('OTHER', href);
-    }
+  // Check if the single button exists (for "Applied" jobs)
+  const singleButtonVisible = await this.page.locator('(//span[@id="already-applied"])[1]').isVisible().catch(() => false);
+  if (singleButtonVisible) {
+    applyButtonXpath = '(//span[@id="already-applied"])[1]';
   }
+
+  const applyText = await getText(this.page, applyButtonXpath);
+
+  if (!applyText) return; // skip if no text
+
+  if (applyText === "Apply") {
+    await click(this.page, applyButtonXpath);
+
+    const isChipVisible = await this.page.locator("div.chipMsg").isVisible().catch(() => false);
+    if (isChipVisible) {
+      await logJobResult("FORM_NEED_TO_FILL", href);
+    }
+
+    console.log("Applied Jobs", href);
+    await logJobResult('APPLIED_JOBS', href);
+
+  } else if (applyText === "Applied") {
+    await logJobResult('APPLIED', href);
+
+  } else if (applyText.includes('Interested')) {
+    console.log('💼 Interested:', href);
+    await logJobResult('INTERESTED', href);
+
+  } else if (applyText.includes('Company Site')) {
+    console.log('🌐 Company Site:', href);
+    await logJobResult('COMPANY_SITE', href);
+  }
+}
+
 
 }

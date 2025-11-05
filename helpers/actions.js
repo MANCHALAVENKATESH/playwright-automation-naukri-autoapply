@@ -10,6 +10,8 @@ export async function click(page, selector) {
   }
   await locator.click();
 }
+export const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 
 export async function fill(page, selector, value) {
   let locator;
@@ -22,6 +24,15 @@ export async function fill(page, selector, value) {
     });
   }
   await locator.fill(value);
+}
+
+export async function navigateTo(page, url, timeout = 60000) {
+  await page.goto(url, {
+    timeout,
+    waitUntil: 'load',
+    userAgent:
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+  });
 }
 export async function implicitWait(ms) {
   console.log(`⏳ Waiting for ${ms / 1000} seconds...`);

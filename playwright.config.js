@@ -12,7 +12,7 @@ export default defineConfig({
 
   // Browser configuration
   use: {
-    headless: true,                 // set true for CI
+    headless: false,                 // set true for CI
     browserName: 'chromium',         // chromium, firefox, or webkit
     viewport: { width: 1280, height: 720 },
     ignoreHTTPSErrors: true, // ignore HTTPS errors in CI
