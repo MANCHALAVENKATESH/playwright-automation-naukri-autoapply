@@ -54,9 +54,9 @@ export class ApplyJob {
 //   }
 // }
 
- async fillChatbotFormDynamic() {
+ async fillChatbotFormDynamic(page) {
   while (true) {
-    const botQuestion = this.page.locator("li.botItem:last-child span");
+    const botQuestion = page.locator("li.botItem:last-child span");
     const isVisible = await botQuestion.isVisible().catch(() => false);
 
     if (!isVisible) break;
@@ -78,37 +78,37 @@ export class ApplyJob {
     }
 
     // 🔥 CHECK IF RADIO BUTTONS APPEARED
-    const radioContainer = this.page.locator("//div[contains(@class,'singleselect-radiobutton')]");
+    const radioContainer = page.locator("//div[contains(@class,'singleselect-radiobutton')]");
     const radiosVisible = await radioContainer.isVisible().catch(() => false);
 
     if (radiosVisible) {
       console.log("🔘 Radio buttons detected... selecting:", answer);
 
-      const option = this.page.locator(`//label[contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'),'${answer.toLowerCase()}')]`);
+      const option = page.locator(`//label[contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'),'${answer.toLowerCase()}')]`);
 
       if (await option.isVisible()) {
         await option.click();
         console.log("✔ Selected radio:", answer);
       } else {
         console.log("⚠ Radio option not found, selecting first option");
-        await this.page.locator("//label[@class='ssrc__label']").first().click();
+        await page.locator("//label[@class='ssrc__label']").first().click();
       }
 
-      await this.page.waitForTimeout(1000);
+      await page.waitForTimeout(1000);
       continue; // move to next question
     }
 
     // 🔤 OTHERWISE — USE INPUT BOX
-    const chatInput = this.page.locator("//div[starts-with(@id,'userInput__') and contains(@id,'InputBox')]");
+    const chatInput = page.locator("//div[starts-with(@id,'userInput__') and contains(@id,'InputBox')]");
     const inputVisible = await chatInput.isVisible().catch(() => false);
 
     if (inputVisible) {
       console.log("⌨ Filling text input:", answer);
 
       await chatInput.fill(answer);
-      await this.page.keyboard.press("Enter");
+      await page.keyboard.press("Enter");
 
-      await this.page.waitForTimeout(1200);
+      await page.waitForTimeout(1200);
       continue;
     }
 
@@ -122,10 +122,10 @@ export class ApplyJob {
   // ----------------------------------------
   // MAIN APPLY BUTTON LOGIC
   // ----------------------------------------
-  async jobApplyButtonText(href) {
+  async jobApplyButtonText(page, href) {
     let applyButtonXpath = '(//*[@id="job_header"]/div[2]/div[2]/button)[2]';
 
-    const singleButtonVisible = await this.page
+    const singleButtonVisible = await page
       .locator('(//span[@id="already-applied"])[1]')
       .isVisible()
       .catch(() => false);
@@ -134,14 +134,14 @@ export class ApplyJob {
       applyButtonXpath = '(//span[@id="already-applied"])[1]';
     }
 
-    const applyText = await getText(this.page, applyButtonXpath);
+    const applyText = await getText(page, applyButtonXpath);
     if (!applyText) return;
 
     // ---------------- APPLY ----------------
     if (applyText === "Apply") {
-      await click(this.page, applyButtonXpath);
+      await click(page, applyButtonXpath);
 
-      const isChipVisible = await this.page
+      const isChipVisible = await page
         .locator("div.chipMsg")
         .isVisible()
         .catch(() => false);
@@ -150,7 +150,7 @@ export class ApplyJob {
         await logJobResult("FORM_NEED_TO_FILL", href);
 
         // 🔥 Call the dynamic chatbot filling method
-        await this.fillChatbotFormDynamic();
+        await this.fillChatbotFormDynamic(page);
       }
 
       console.log("Applied Jobs", href);

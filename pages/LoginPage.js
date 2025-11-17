@@ -73,6 +73,6 @@ export class LoginPage {
     await this.enterPassword(password);
     await this.submit();
     await implicitWait(2000);
-     await this.saveCookies(); 
+    await this.saveCookies(); 
   }
 }

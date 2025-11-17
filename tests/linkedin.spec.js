@@ -51,7 +51,7 @@ test('LinkedIn Easy Apply Automation', async ({ page, context }) => {
       console.log(`\n🔍 Processing Job ${i + 1}/${jobIds.length}: ${currentJobId}`);
 
       await navigateTo(page, jobUrl);
-      // await navigateTo(page, "https://www.linkedin.com/jobs/collections/recommended/?currentJobId=4322733011");
+      // await navigateTo(page, "https://www.linkedin.com/jobs/collections/recommended/?currentJobId=4336761796");
       await page.waitForTimeout(5000);
       const easyApplyButton = await page.locator('#jobs-apply-button-id').first();
 

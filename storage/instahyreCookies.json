@@ -1,0 +1,112 @@
+[
+  {
+    "name": "csrftoken",
+    "value": "Zv4kHNAgNaPrNnL4tx0LhLsz2ekoEWArcEsoURD1kv9pL0QVQs3UmhDltU8lJIcL",
+    "domain": "www.instahyre.com",
+    "path": "/",
+    "expires": 1794852512.192768,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "sessionid",
+    "value": "9r3g7mi8dlj0b8y72tm2pr811sb5lrng",
+    "domain": "www.instahyre.com",
+    "path": "/",
+    "expires": 1768586911.279586,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "_ga",
+    "value": "GA1.1.796429179.1763402912",
+    "domain": ".instahyre.com",
+    "path": "/",
+    "expires": 1797962911.540802,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "_ga_0PQL61K7YN",
+    "value": "GS2.1.s1763402911$o1$g0$t1763402911$j60$l0$h0",
+    "domain": ".instahyre.com",
+    "path": "/",
+    "expires": 1797962911.549429,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "ar_debug",
+    "value": "1",
+    "domain": ".www.google-analytics.com",
+    "path": "/",
+    "expires": 1771178912.050134,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "li_sugr",
+    "value": "1530258a-b65a-44df-92b7-16a0778f0977",
+    "domain": ".linkedin.com",
+    "path": "/",
+    "expires": 1771178913.28627,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "bcookie",
+    "value": "\"v=2&3d67eec0-1918-478d-8cda-822ee59f993b\"",
+    "domain": ".linkedin.com",
+    "path": "/",
+    "expires": 1794938913.286532,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "lidc",
+    "value": "\"b=VGST00:s=V:r=V:a=V:p=V:g=3791:u=1:x=1:i=1763402911:t=1763489311:v=2:sig=AQGPCk5m32k8fhcVvK9UG7atlvk4qB1W\"",
+    "domain": ".linkedin.com",
+    "path": "/",
+    "expires": 1763489313.524141,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "UserMatchHistory",
+    "value": "AQKazvgAv0c_FQAAAZqTAQ7qyiFdLQn3_uJf0-HtHzo8NWw-qUdDmU-zJJI-OzJWdNgJiIxooZke8A",
+    "domain": ".linkedin.com",
+    "path": "/",
+    "expires": 1765994912.776687,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "AnalyticsSyncHistory",
+    "value": "AQKbhxhtnOwYmgAAAZqTAQ7qBPv6ig55ZDt9yCTHUI66bjFe-ap_v5MNafaZqs0LDdZSlxSDDxFRvFE05IcIKA",
+    "domain": ".linkedin.com",
+    "path": "/",
+    "expires": 1765994912.776715,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "bscookie",
+    "value": "\"v=1&202511171808318a0cf008-ccbd-4480-81dd-d85c586bb9faAQEhqDpYOPQgLhNup-dBLzO59uPxO0-u\"",
+    "domain": ".www.linkedin.com",
+    "path": "/",
+    "expires": 1794938914.038078,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None"
+  }
+]

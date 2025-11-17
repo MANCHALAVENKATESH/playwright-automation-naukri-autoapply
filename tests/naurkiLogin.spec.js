@@ -87,7 +87,7 @@ test.describe("Naukri Test Suite", () => {
         await page.goto(jobHref, { waitUntil: 'load' });
         await sleep(2000);
 
-        await applyJob.jobApplyButtonText(jobHref);
+        await applyJob.jobApplyButtonText(page, jobHref);
       }
     }
 

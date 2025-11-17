@@ -2,7 +2,9 @@
 import dotenv from 'dotenv';
 dotenv.config();
 const keywords = [
- "flutter-developer"
+ "sdet",
+ "software-development-engineer-test"
+
 ];
 
 
@@ -62,4 +64,11 @@ export class LinkedinConfig {
 export class ITRConfig {
    static ITR_USER_ID = process.env.ITR_USER_ID;
    static ITR_PASSWORD = process.env.ITR_USER_PASSWORD;
+}
+export class EnvInstaHyre{
+  static INSTAHYRE_EMAIL = process.env.INSTAHYRE_EMAIL
+  static INSTAHYRE_PASSWORD= process.env.INSTAHYRE_PASSWORD
+  static InstaHyre = "https://www.instahyre.com"
+  static LOGIN = `${this.InstaHyre}/login/`
+  static JOB_URL = `${this.InstaHyre}/candidate/opportunities/?company_size=0&job_type=0&search=true`
 }
