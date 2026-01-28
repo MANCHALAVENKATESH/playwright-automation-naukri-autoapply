@@ -4,7 +4,7 @@
   "description": "Automation for Naukri profile and job application",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test tests/naurkiLogin.spec.js",
+    "test": "npx playwright test tests/exterview.spec.js",
     "test:report": "npx playwright show-report"
   },
   "keywords": ["playwright", "automation", "naukri", "csv"],
