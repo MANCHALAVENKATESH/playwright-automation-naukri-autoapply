@@ -2,7 +2,7 @@ export class DashboardPage {
     constructor(page) {
         this.page = page
         this.createJobBtn = page.locator("//button[normalize-space()='Create Job']")
-        this.continueBtn = page.locator("//button[normalize-space()='Continue']");
+this.continueBtn = this.page.getByRole('button', { name: 'Continue', exact: true });
         this.file = page.locator("//input[@type='file']")
         this.avatarIcon = page.locator("//div[@title='Avatar Interview']")
     }

@@ -24,6 +24,7 @@ export class CandidatePage {
     }
     
     async selectCityOption() {
+        // await this.typeCity.waitFor({ timeout: 20000 });
         const selectedValue = this.cityInput.locator("span").innerText();
         if (selectedValue != 'Select City' || selectedValue.trim() === '') {
             await this.cityInput.click()

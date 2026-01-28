@@ -52,9 +52,11 @@ test.describe('Exterview Flow', () => {
         await page.goto('https://app.exterview.ai/admin/dashboard');
         await page.waitForTimeout(5000)
         const popupHeading = page.locator("text=What's new in Exterview");
+        
         if (await popupHeading.isVisible({ timeout: 3000 }).catch(() => false)) {
             await page.keyboard.press('Escape');
         }
+
         await page.keyboard.press('Escape');
         await page.keyboard.press('Escape');
         const dashboardpage = new DashboardPage(page)
@@ -64,14 +66,14 @@ test.describe('Exterview Flow', () => {
         await dashboardpage.uploadFile(TestData.jdFile)
         await expect(page.locator('text=jd.pdf')).toBeVisible();
         await dashboardpage.clickContinueBtn()
-        await page.waitForTimeout(15000)
+        // await page.waitForTimeout(15000)
         // City
         const candidatePage = new CandidatePage(page);
         await candidatePage.selectCityOption();
         await candidatePage.enterCTC()
         await candidatePage.avatarInterview()
         await candidatePage.clickContinueBtn();
-        await page.waitForTimeout(10000)
+        // await page.waitForTimeout(15000)
         //add Questionaries
         await candidatePage.clickContinueBtn();
         await candidatePage.clickContinueBtn();
@@ -81,7 +83,7 @@ test.describe('Exterview Flow', () => {
         await jobdetailspage.addBtn()
         await jobdetailspage.uploadResume(TestData.resume)
         await jobdetailspage.uploadButtonClick()
-        await page.waitForTimeout(15000)
+        // await page.waitForTimeout(15000)
         //clipboard
         // await page.goto();
         const copylink = await jobdetailspage.copyLinkKeyboard()

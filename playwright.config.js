@@ -7,7 +7,7 @@ dotenv.config();
 
 export default defineConfig({
   testDir: './tests',                // your test folder
-  timeout: 30 * 1000,                // 60 seconds per test
+  timeout: 60 * 1000,                // 60 seconds per test
   expect: { timeout: 5000 },
 
   // Browser configuration
