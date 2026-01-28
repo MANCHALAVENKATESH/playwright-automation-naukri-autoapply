@@ -90,7 +90,7 @@ test.describe('Exterview Flow', () => {
         console.log(copylink);
         const interviewPage = await context.newPage()
         const jobinterview = new JobInterviewPage(interviewPage)
-        await interviewPage.goto("https://app.exterview.ai/video-interview/69798827a56d79943660dd6f")
+        await interviewPage.goto(copylink)
         await jobinterview.continueInterview()
         await interviewPage.waitForTimeout(3000)
         await jobinterview.captureOrRetake()
