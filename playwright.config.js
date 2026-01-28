@@ -25,6 +25,6 @@ export default defineConfig({
   },
 
   // Parallel execution config
-  workers: 2,                        // run 2 tests at a time
+  workers: 1,                        // run 2 tests at a time
   reporter: [['list'], ['html', { outputFolder: 'playwright-report' }]],
 });
